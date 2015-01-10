@@ -1,0 +1,20 @@
+[program:PhantomJs]
+command=/opt/phantomjs/bin/phantomjs --webdriver=808%(process_num)s --webdriver-selenium-grid-hub=http://0.0.0.0:80 --ignore-ssl-errors=true
+process_name=PhantomJs_%(process_num)s
+numprocs=5
+exitcodes = 120,121,122,123,124,125,126,127
+user=root
+stdout_logfile=NONE
+autostart=true
+startsecs=10
+
+[program:SeleniumHub]
+command=java -jar /opt/selenium-server-standalone.jar -role hub -host 0.0.0.0 -port 80
+process_name=SeleniumHub_%(process_num)s
+numprocs=1
+exitcodes = 120,121,122,123,124,125,126,127
+user=root
+stdout_logfile=NONE
+autostart=true
+startsecs=10
+
