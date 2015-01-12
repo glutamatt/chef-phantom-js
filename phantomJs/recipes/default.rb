@@ -43,6 +43,10 @@ template '/etc/supervisor/conf.d/phantomJs.conf' do
   notifies :restart, 'service[supervisor]'
 end
 
+template '/opt/uploader.py' do
+  source 'uploader.py.erb'
+end
+
 service 'supervisor' do
   action :start
 end

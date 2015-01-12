@@ -18,3 +18,13 @@ stdout_logfile=NONE
 autostart=true
 startsecs=10
 
+[program:Uploader]
+command=python /opt/uploader.py
+process_name=Uploader_%(process_num)s
+numprocs=1
+exitcodes = 120,121,122,123,124,125,126,127
+user=root
+stdout_logfile=NONE
+autostart=true
+startsecs=10
+

@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+import SimpleHTTPServer
+import SocketServer
+import tempfile
+try:
+    from cStringIO import StringIO
+except:
+    from StringIO import StringIO
+
+
+class UploadHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        return
+
+    def do_POST(self):
+        if self.path != '/tmp':
+            return
+        tmp_file = tempfile.NamedTemporaryFile(delete=False)
+        f = StringIO()
+        f.write(tmp_file.name)
+        f.seek(0)
+        self.send_response(200)
+        self.end_headers()
+        self.copyfile(f, self.wfile)
+        f.close()
+        tmp_file.write(self.rfile.read().decode("base64"))
+        tmp_file.close()
+
+server = SocketServer.TCPServer(('0.0.0.0', 443), UploadHandler)
+
+server.serve_forever()
